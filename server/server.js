@@ -31,54 +31,22 @@ app.get('/api/users/:id', (req, res) => {
 })
 
 app.post('/api/users', ({body}, res) => {
-	if (body.password === body.confirmation) {
-		knex('User')
-			.select()
-			.where('email', body.email)
-			.then(user => {
-				if (user.length) {
-					res.send(user)
-				} else {
-					hash(body.password, 15, (err, hash) => {
-						if (err) {
-							console.log(err)
-						} else {
-							const user = {
-								email: body.email,
-								password: hash
-							}
-							knex('User')
-								.insert(user)
-								.then( data => {
-									console.log('data', data)
-									res.send(data)
-								})
-								.catch(console.error)
-						}
-					})
-				}
-			}) 
-	} else {
-		res.send('password and confirmation did not match, you did not register')
-	}
-
-
-
-
-
-
+	new User({ email: body.email, password: body.password})
+		.save()
+		.then( user => res.send(user))
+		.catch(console.error)
 })
 
 app.get('/api/patients', (req, res) => {
-	knex('Patient')
-		.select()
-		.then( data => res.send(data))
+	new Patient().fetchAll()
+		.then( patients => res.send(patients))
+		.catch(console.error)
 })
 
 app.post('/api/patients', (req, res) => {
-	knex('Patient')
-		.insert(req.body)
-		.then( data => res.send(data))
+	new Patient(req.body)
+		.save()
+		.then( patient => res.send(patient))
 		.catch(console.error)
 })
 
