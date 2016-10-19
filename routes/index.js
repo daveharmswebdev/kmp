@@ -8,6 +8,14 @@ const Patient = require('../model/patient')
 
 const { hash } = require('bcrypt')
 
+const login = require('./login')
+
+router.use(login)
+
+router.get('/', (req, res) => {
+	res.send('you have logged in like a winner')
+})
+
 router.get('/api/users', (req, res) => {
 	new User().fetchAll()
 		.then( users => {

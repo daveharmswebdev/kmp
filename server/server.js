@@ -20,6 +20,10 @@ app.use(session({
 	secret: 'daveisnumberone'
 }))
 
+require('./passport-strategies')
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(bodyParser.urlencoded({extended:false}))
 
 app.use(routes)
