@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daveharmswebdev/kmp.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,8 +17,11 @@
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "bookshelf": "^0.10.2",
+    "connect-redis": "^3.1.0",
     "express": "^4.14.0",
+    "express-session": "^1.14.1",
     "knex": "^0.12.5",
+    "passport": "^0.3.2",
     "sqlite3": "^3.1.6"
   }
 }

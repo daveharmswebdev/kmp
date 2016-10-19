@@ -1,9 +1,8 @@
 'use strict'
 
-const config = require('../knexfile').development
-const knex = require('knex')(config)
-const bookshelf = require('bookshelf')(knex)
+const bookshelf = require('../server/bookshelf')
 
 module.exports = bookshelf.Model.extend({
-  tableName: 'User',
+  tableName: 'user',
+  patients: () => this.hasMany(Patient)
 })

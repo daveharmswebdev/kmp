@@ -2,37 +2,29 @@
 
 exports.up = (knex, Promise) => {
 
-	return Promise.all([
-
-			knex.schema.createTable('User', table => {
-				table.increments('id')
-				table.string('email').unique()
-				table.string('password')
-				table.string('firstName')
-				table.string('lastName')
-				table.string('middleInitial')
-				table.integer('security_level')
-			}),
-
-			knex.schema.createTable('Patient', table => {
-				table.increments('id')
-				table.string('firstName')
-				table.string('lastName')
-				table.string('middleInitial')
-				table.integer('assigned_rn')
-					.references('id')
-					.inTable('user')
-			})
-
-		])
-
+	return knex.schema
+		.createTable('user', table => {
+			table.increments('id')
+			table.string('email').unique()
+			table.string('password')
+			table.string('firstName')
+			table.string('lastName')
+			table.string('middleInitial')
+			table.integer('security_level')
+		})
+		.createTable('patient', table => {
+			table.increments('id')
+			table.string('firstName')
+			table.string('lastName')
+			table.string('middleInitial')
+			table.integer('assigned_rn')
+				.references('user.id')
+		})
 }
 
 exports.down = (knex, Promise) => {
-
-	return Promise.all([
-			knex.schema.dropTable('User'),
-			knex.schema.dropTable('Patient')
-		])
-
+	return knex
+		.schema
+		.dropTable('patient')
+		.dropTable('user')
 }
