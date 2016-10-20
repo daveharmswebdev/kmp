@@ -5,7 +5,7 @@ const router = Router()
 const passport = require('passport')
 
 router.get('/login', (req,res) => {
-	res.send('you are trying to log in')
+	res.render('login')
 })
 
 router.post('/login', passport.authenticate('local', { successRedirect: '/',

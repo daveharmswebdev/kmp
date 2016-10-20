@@ -12,6 +12,14 @@ const PORT = process.env.PORT || 3000
 
 const app = express()
 
+// set view enging
+app.set('view engine', 'pug')
+app.use(express.static('client'))
+app.use(bodyParser.urlencoded({extended:false}))
+
+app.locals.errors = {} // to avoid guard statements
+app.locals.body = {}
+
 // middlewares
 app.use(session({
 	store: new RedisStore({
@@ -24,7 +32,12 @@ require('./passport-strategies')
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(bodyParser.urlencoded({extended:false}))
+app.use((req, res, next) => {
+	console.log('req.user', req.user)
+	app.locals.user = req.user && req.user.email
+	console.log('the user is', app.locals.user)
+	next()
+})
 
 app.use(routes)
 
